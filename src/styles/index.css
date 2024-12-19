@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import './gradients.css';
+
+/* Reset & Base Styles */
+*,
+:before,
+:after {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
+  background-color: #0A0A0A;
+}
+
+/* Selection Colors */
+::selection {
+  background-color: rgba(51, 123, 151, 0.2);
+  color: inherit;
+}
+
+/* Logo Styles */
+.rocket-logo {
+  filter: drop-shadow(0 0 10px rgba(51, 123, 151, 0.3));
+}

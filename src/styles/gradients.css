@@ -1,0 +1,39 @@
+/* Gradient Utilities */
+.bg-gradient-main {
+  background: linear-gradient(135deg, #337B97 0%, #0A0A0A 100%);
+}
+
+.bg-gradient-radial {
+  background: radial-gradient(circle at top center, 
+    rgba(91, 155, 178, 0.3) 0%, 
+    rgba(10, 10, 10, 0.9) 100%
+  );
+}
+
+:root {
+  --gradient-start: #5B9BB2;
+  --gradient-end: #0A0A0A;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 15s ease infinite;
+}
+
+/* Selection Colors */
+::selection {
+  background-color: rgba(91, 155, 178, 0.2);
+  color: inherit;
+}
