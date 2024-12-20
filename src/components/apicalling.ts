@@ -7,7 +7,7 @@ export async function submitAudioFileAndGetAudioTranscription(blob: Blob) {
     formData.append('file', blob, filename);
     // formData.append('transcriptStyle', transcriptStyle); 
 
-    const url = "https://salad-api-v2-rocketprose.onrender.com/rocketprose_transcribe";
+    const url = "https://salad-api-v2-zrui.onrender.com/rocketprose_transcribe";
 
     try {
         const response = await fetch(url, {
@@ -37,7 +37,7 @@ export async function submitAudioFileAndGetAudioTranscription(blob: Blob) {
 
 export async function GenerateProse(AudioTranscription: {transcript:string},transcriptionStyle: string |undefined) {
 
-    const url = "https://salad-api-v2-rocketprose.onrender.com/rocketprose_openaiapi";
+    const url = "https://salad-api-v2-zrui.onrender.com/rocketprose_openaiapi";
 
     try {
         const response = await fetch(url, {
