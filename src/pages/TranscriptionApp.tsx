@@ -9,7 +9,7 @@ import { useAudioRecorder } from '../hooks/useAudioRecorder.ts';
 import { AudioRecorderAndTranscriptionPreview } from '../components/audio/AudioRecorder.tsx';
 
 export function TranscriptionApp() {
-  const [transcriptStyle, setTranscriptStyle] = useState<TranscriptStyle>('Standard Transcript');
+  const [transcriptStyle, setTranscriptStyle] = useState<string>('Create a clean and accurate transcript. Include speaker identification and timestamps while minimizing edits.');
   const [transcription, setTranscription] = useState<TranscriptionState>({
     status: 'idle',
     text: '',

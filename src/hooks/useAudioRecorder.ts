@@ -27,6 +27,7 @@ export function useAudioRecorder(transcriptStyle?: string) {
 
       mediaRecorder.current.onstop = async () => { // Added 'async' here
         const blob = new Blob(chunks.current, { type: 'audio/ogg; codecs=opus' });
+        
         const audioTranscription= await submitAudioFileAndGetAudioTranscription(blob); // This will now work correctly
         const proseRes = await GenerateProse(audioTranscription,transcriptStyle); // This will now work correctly
         if(audioTranscription !=="Error" && proseRes !=="Error" ){

@@ -18,4 +18,5 @@ export interface TranscriptStyleOption {
   label: TranscriptStyle;
   description: string;
   example: string;
+  prompt: string
 }
