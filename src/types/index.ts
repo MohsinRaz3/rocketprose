@@ -5,6 +5,8 @@ export interface AudioState {
   isPaused: boolean;
   duration: number;
   audioUrl: string | null;
+  prose:string;
+  isError : "Error"|""
 }
 
 export interface TranscriptionState {

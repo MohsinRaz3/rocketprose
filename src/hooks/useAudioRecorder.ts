@@ -1,13 +1,15 @@
 import { useState, useRef, useCallback } from 'react';
 import { AudioState } from '../types';
-import { submitAudioFiles } from '../components/apicalling';
+import { GenerateProse, submitAudioFileAndGetAudioTranscription } from '../components/apicalling';
 
-export function useAudioRecorder(transcriptStyle: string) {
+export function useAudioRecorder(transcriptStyle?: string) {
   const [audioState, setAudioState] = useState<AudioState>({
     isRecording: false,
     isPaused: false,
     duration: 0,
     audioUrl: null,
+    prose: "",
+    isError : ""
   });
   
   const mediaRecorder = useRef<MediaRecorder | null>(null);
@@ -25,10 +27,20 @@ export function useAudioRecorder(transcriptStyle: string) {
 
       mediaRecorder.current.onstop = async () => { // Added 'async' here
         const blob = new Blob(chunks.current, { type: 'audio/ogg; codecs=opus' });
-        await submitAudioFiles(blob, transcriptStyle); // This will now work correctly
-        const audioUrl = URL.createObjectURL(blob);
-        console.log("recording stopped call api", blob);
-        setAudioState(prev => ({ ...prev, audioUrl }));
+        const audioTranscription= await submitAudioFileAndGetAudioTranscription(blob); // This will now work correctly
+        const proseRes = await GenerateProse(audioTranscription,transcriptStyle); // This will now work correctly
+        if(audioTranscription !=="Error" && proseRes !=="Error" ){
+          setAudioState(prev => ({
+            ...prev, // Spread previous state to ensure a new object is created
+            prose: proseRes,
+          }));
+                    
+        }
+        else{
+          setAudioState(prev => ({ ...prev, isError:"Error" }));
+        }
+
+
         chunks.current = [];
       };
       

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { AudioRecorder } from '../components/audio/AudioRecorder';
 import { FileUpload } from '../components/upload/FileUpload';
 import { TranscriptStyleSelector } from '../components/transcript/TranscriptStyleSelector';
 import { TranscriptSection } from '../components/transcript/TranscriptSection';
 import { TranscriptStyle } from '../types/transcript';
 import { TranscriptionState } from '../types';
 import { Header } from '../components/layout/Layout.tsx';
+import { useAudioRecorder } from '../hooks/useAudioRecorder.ts';
+import { AudioRecorderAndTranscriptionPreview } from '../components/audio/AudioRecorder.tsx';
 
 export function TranscriptionApp() {
   const [transcriptStyle, setTranscriptStyle] = useState<TranscriptStyle>('Standard Transcript');
@@ -13,6 +14,7 @@ export function TranscriptionApp() {
     status: 'idle',
     text: '',
   });
+  const { audioState} = useAudioRecorder(transcriptStyle);
     const downloadTranscript = () => {
     if (!transcription.text) return;
    
@@ -26,8 +28,7 @@ export function TranscriptionApp() {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   };
-  console.log("transcriptStyle #t",transcriptStyle)
-  console.log("transcription #t",transcription)
+
   return (
     <div className="min-h-screen bg-gradient-main">
       <Header />
@@ -38,12 +39,11 @@ export function TranscriptionApp() {
             Record or upload audio files and get accurate transcriptions in your preferred style
           </p>
         </div>
-
-        <div className="space-y-8">
-          <div className="bg-white/10 backdrop-blur rounded-lg shadow-md p-6 border border-white/20">
-            <h2 className="text-xl font-semibold text-white mb-4">Record Audio</h2>
-            <AudioRecorder transcriptStyle={transcriptStyle} />
-          </div>
+<div className='space-y-8'>
+        
+            <AudioRecorderAndTranscriptionPreview transcriptStyle={transcriptStyle} />
+    
+          
 
           <div className="bg-white/10 backdrop-blur rounded-lg shadow-md p-6 border border-white/20">
             <h2 className="text-xl font-semibold text-white mb-4">Upload Audio File</h2>
