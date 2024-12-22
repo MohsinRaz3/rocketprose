@@ -14,23 +14,23 @@ export function Header() {
     <img 
       src="/rockettoolslogo.webp" 
       alt="Rocket Tools" 
-      className="h-8 w-auto"
+      className="h-5 md:h-8 w-auto"
     />
-    <span className="text-white font-semibold text-xl">
+    <span className="text-white font-semibold text-sm md:text-xl">
       RocketProse
     </span>
   </div>
   <button
-        onClick={()=>navigate("/signup")} 
+        onClick={()=>navigate("/signin")} 
         className="bg-[#5B9BB2] text-sm text-white px-4 py-2 rounded-xl font-semibold
            hover:bg-[#337B97] transition-all transform hover:scale-105
            shadow-lg"
 >
-  SignUp
+  SignIn
 </button>
 </div>
 </header>
-      <Outlet /> {/* Renders the child route content here */}
+      <Outlet /> 
       </>
 
   );

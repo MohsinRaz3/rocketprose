@@ -23,14 +23,6 @@ export async function submitAudioFileAndGetAudioTranscription(blob: File) {
 
     const wavFile = new File([wavBuffer], `${timestamp}.wav`, { type: 'audio/wav' });
 
-    const downloadUrl = URL.createObjectURL(wavFile); 
-    const downloadLink = document.createElement('a'); 
-    downloadLink.href = downloadUrl;
-    downloadLink.download = `${timestamp}.wav`; 
-    downloadLink.click(); 
-
-    setTimeout(() => URL.revokeObjectURL(downloadUrl), 5000);
-
     const formData = new FormData();
     formData.append('file', wavFile);
 

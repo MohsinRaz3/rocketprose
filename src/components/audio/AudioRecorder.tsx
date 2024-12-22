@@ -2,9 +2,10 @@ import React from 'react';
 import { Mic, Square, Pause, Play } from 'lucide-react';
 import { useAudioRecorder } from '../../hooks/useAudioRecorder';
 import { TranscriptionPreview } from '../upload/TranscriptionPreview';
+import { WriteTranscriptionArea } from '../upload/WriteTranscription';
 export function AudioRecorderAndTranscriptionPreview({transcriptStyle}:{transcriptStyle:string}) {
   // completion()
-  const { audioState, startRecording, stopRecording, pauseRecording, resumeRecording } = useAudioRecorder(transcriptStyle);
+  const { audioState,setAudioState, startRecording, stopRecording, pauseRecording, resumeRecording } = useAudioRecorder(transcriptStyle);
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -13,9 +14,9 @@ export function AudioRecorderAndTranscriptionPreview({transcriptStyle}:{transcri
 
   return (
     <div className=' space-y-8'>
-          <div className="bg-white/10 backdrop-blur rounded-lg shadow-md p-6 border border-white/20">
+          <div className="bg-white/10 backdrop-blur rounded-lg shadow-md p-3 md:p-6 border border-white/20">
             <h2 className="text-xl font-semibold text-white mb-4">Record Audio</h2>
-    <div className="bg-white rounded-lg p-6 shadow-md h-[140px]">
+    <div className="bg-white rounded-lg p-3 md:p-6 shadow-md h-[140px]">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center space-x-2">
           <div className={`w-3 h-3 rounded-full ${audioState.isRecording ? 'bg-red-500 animate-pulse' : 'bg-gray-300'}`} />
@@ -64,12 +65,14 @@ export function AudioRecorderAndTranscriptionPreview({transcriptStyle}:{transcri
       )}
     </div>
     </div>
-    {audioState.prose && audioState.prose.length > 0 &&(
-            <TranscriptionPreview key={audioState.prose} prose={audioState.prose} />
-           )} 
+{ audioState.prose.length === 0 &&(
+  <h3 className='text-2xl md:text-3xl font-semibold text-white text-center'>or</h3>
+)}
+      {audioState.prose && audioState.prose.length > 0 &&(
+        <TranscriptionPreview key={audioState.prose} prose={audioState.prose} />
+        )} 
 
-
-
+      <WriteTranscriptionArea transcriptStyle={transcriptStyle} setAudioState={setAudioState}audioState={audioState} />
 
 
 

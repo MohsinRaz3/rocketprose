@@ -14,7 +14,7 @@ export function TranscriptionApp() {
     status: 'idle',
     text: '',
   });
-  const { audioState,setTranscriptStyle} = useAudioRecorder();
+  const { audioState,setTranscriptStyle} = useAudioRecorder("You are a skilled transcriptionist. Convert the spoken input into a clean, polished written transcript while maintaining the original meaning. Fix any speech disfluencies, remove filler words (um, uh, like), and correct grammar without changing the core message. Format the text with proper punctuation and paragraphing. Keep contractions and casual language if they were intentionally used. Do not add interpretations or additional content. Focus on producing a clear, professional transcript that reads naturally while staying true to the speaker's intended message.");
   
     const downloadTranscript = () => {
     if (!transcription.text) return;
@@ -42,6 +42,7 @@ export function TranscriptionApp() {
         </div>
         <div className='space-y-8'>
             <AudioRecorderAndTranscriptionPreview transcriptStyle={audioState.transcriptStyle} />
+            
           <div className="bg-white/10 backdrop-blur rounded-lg shadow-md p-6 border border-white/20">
             <h2 className="text-xl font-semibold text-white mb-4">Upload Audio File</h2>
             <FileUpload />
