@@ -9,12 +9,13 @@ import { useAudioRecorder } from '../hooks/useAudioRecorder.ts';
 import { AudioRecorderAndTranscriptionPreview } from '../components/audio/AudioRecorder.tsx';
 
 export function TranscriptionApp() {
-  const [transcriptStyle, setTranscriptStyle] = useState<string>('Create a clean and accurate transcript. Include speaker identification and timestamps while minimizing edits.');
+  // const [transcriptStyle, setTranscriptStyle] = useState<string>("You are a skilled transcriptionist. Convert the spoken input into a clean, polished written transcript while maintaining the original meaning. Fix any speech disfluencies, remove filler words (um, uh, like), and correct grammar without changing the core message. Format the text with proper punctuation and paragraphing. Keep contractions and casual language if they were intentionally used. Do not add interpretations or additional content. Focus on producing a clear, professional transcript that reads naturally while staying true to the speaker's intended message.");
   const [transcription, setTranscription] = useState<TranscriptionState>({
     status: 'idle',
     text: '',
   });
-  const { audioState} = useAudioRecorder(transcriptStyle);
+  const { audioState,setTranscriptStyle} = useAudioRecorder();
+  
     const downloadTranscript = () => {
     if (!transcription.text) return;
    
@@ -39,12 +40,8 @@ export function TranscriptionApp() {
             Record or upload audio files and get accurate transcriptions in your preferred style
           </p>
         </div>
-<div className='space-y-8'>
-        
-            <AudioRecorderAndTranscriptionPreview transcriptStyle={transcriptStyle} />
-    
-          
-
+        <div className='space-y-8'>
+            <AudioRecorderAndTranscriptionPreview transcriptStyle={audioState.transcriptStyle} />
           <div className="bg-white/10 backdrop-blur rounded-lg shadow-md p-6 border border-white/20">
             <h2 className="text-xl font-semibold text-white mb-4">Upload Audio File</h2>
             <FileUpload />
@@ -53,7 +50,7 @@ export function TranscriptionApp() {
           <div className="bg-white/10 backdrop-blur rounded-lg shadow-md p-6 border border-white/20">
             <h2 className="text-xl font-semibold text-white mb-4">Transcription Style</h2>
             <TranscriptStyleSelector
-              value={transcriptStyle}
+              value={audioState.transcriptStyle}
               onChange={setTranscriptStyle}
             />
           </div>

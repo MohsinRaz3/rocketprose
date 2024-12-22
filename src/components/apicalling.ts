@@ -38,7 +38,7 @@ export async function submitAudioFileAndGetAudioTranscription(blob: Blob) {
 export async function GenerateProse(AudioTranscription: {transcript:string},transcriptionStyle: string |undefined) {
 
     const url = "https://salad-api-v2-zrui.onrender.com/rocketprose_openaiapi";
-
+console.log("transcriptionStyle #api",transcriptionStyle)
     try {
         const response = await fetch(url, {
             method: 'POST',

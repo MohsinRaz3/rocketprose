@@ -26,7 +26,7 @@ export function TranscriptPreview({ text, status, error }: TranscriptPreviewProp
 
   if (status === 'completed') {
     return (
-      <div className="prose max-w-none">
+      <div className="prose max-w-none ">
         <pre className="whitespace-pre-wrap bg-gray-50 p-4 rounded-lg">
           {text}
         </pre>
