@@ -4,8 +4,8 @@ import { transcriptStyles } from '../data/transcriptStyles';
 import { StyleCard } from './StyleCard';
 
 interface Props {
-  value: TranscriptStyle;
-  onChange: (style: TranscriptStyle) => void;
+  value: string;
+  onChange: (style: string) => void;
 }
 
 export function TranscriptStyleSelector({ value, onChange }: Props) {
@@ -18,10 +18,10 @@ export function TranscriptStyleSelector({ value, onChange }: Props) {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {transcriptStyles.map((style) => (
           <StyleCard
-            key={style.value}
+            key={style.prompt}
             style={style}
-            isSelected={value === style.label}
-            onClick={() => onChange(style.label)}
+            isSelected={value === style.prompt}
+            onClick={() => onChange(style.prompt)}
           />
         ))}
       </div>

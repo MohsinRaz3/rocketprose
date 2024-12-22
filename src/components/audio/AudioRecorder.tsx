@@ -2,7 +2,6 @@ import React from 'react';
 import { Mic, Square, Pause, Play } from 'lucide-react';
 import { useAudioRecorder } from '../../hooks/useAudioRecorder';
 import { TranscriptionPreview } from '../upload/TranscriptionPreview';
-
 export function AudioRecorderAndTranscriptionPreview({transcriptStyle}:{transcriptStyle:string}) {
   // completion()
   const { audioState, startRecording, stopRecording, pauseRecording, resumeRecording } = useAudioRecorder(transcriptStyle);
@@ -16,7 +15,7 @@ export function AudioRecorderAndTranscriptionPreview({transcriptStyle}:{transcri
     <div className=' space-y-8'>
           <div className="bg-white/10 backdrop-blur rounded-lg shadow-md p-6 border border-white/20">
             <h2 className="text-xl font-semibold text-white mb-4">Record Audio</h2>
-    <div className="bg-white rounded-lg p-6 shadow-md">
+    <div className="bg-white rounded-lg p-6 shadow-md h-[140px]">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center space-x-2">
           <div className={`w-3 h-3 rounded-full ${audioState.isRecording ? 'bg-red-500 animate-pulse' : 'bg-gray-300'}`} />
@@ -26,7 +25,10 @@ export function AudioRecorderAndTranscriptionPreview({transcriptStyle}:{transcri
         </div>
         <span className="text-sm font-mono">{formatTime(audioState.duration)}</span>
       </div>
-
+{
+  audioState.isLoading ?(
+    <img src="/loader-circle.png" className='h-8 w-8 animate-spin mx-auto' alt="audio loading" />
+  ):(
       <div className="flex justify-center space-x-4">
         {!audioState.isRecording ? (
           <button
@@ -52,6 +54,8 @@ export function AudioRecorderAndTranscriptionPreview({transcriptStyle}:{transcri
           </>
         )}
       </div>
+  )
+}
 
       {audioState.audioUrl && (
         <div className="mt-4">
@@ -63,6 +67,13 @@ export function AudioRecorderAndTranscriptionPreview({transcriptStyle}:{transcri
     {audioState.prose && audioState.prose.length > 0 &&(
             <TranscriptionPreview key={audioState.prose} prose={audioState.prose} />
            )} 
+
+
+
+
+
+
+
 
     </div>
   );

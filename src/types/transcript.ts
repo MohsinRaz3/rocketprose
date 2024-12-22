@@ -10,12 +10,21 @@ export type TranscriptStyle =
   | 'Journalist'
   | 'LinkedIn Poster'
   | 'Thread Maker'
-  | 'X Post';
+  | 'X Post'
+  | 'Blogger'
+  | 'Newsletter Writer'
+  | 'YouTube Describer'
+  | 'Press Release Writer'
+  | 'Pinterest Pinner'
+  | 'Image Prompter'
+  | 'Financial Analyst'
+  | 'Email Writer'
+  | 'Essay Writer';
 
 export interface TranscriptStyleOption {
   id:number;
   value: string;
-  label: TranscriptStyle;
+  label: string;
   description: string;
   example: string;
   prompt: string

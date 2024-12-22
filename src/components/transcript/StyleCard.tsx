@@ -9,6 +9,7 @@ interface StyleCardProps {
 }
 
 export function StyleCard({ style, isSelected, onClick }: StyleCardProps) {
+  // console.log("style ##tt",style )
   return (
     <div
       onClick={onClick}
@@ -22,7 +23,7 @@ export function StyleCard({ style, isSelected, onClick }: StyleCardProps) {
         <div className={`h-5 w-5 rounded-full border flex items-center justify-center ${
           isSelected ? 'border-rocket-400 bg-rocket-400' : 'border-white/40'
         }`}>
-          {isSelected && <Check size={12} className="text-white" />}
+          {isSelected && <Check size={21} className="text-white" />}
         </div>
       </div>
       <p className="text-sm text-white/80 mb-2">{style.description}</p>
