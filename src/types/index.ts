@@ -6,7 +6,7 @@ export interface AudioState {
   duration: number;
   audioUrl: string | null;
   prose:string;
-  isError : "Error"|""
+  isError : string
   isLoading : boolean
   transcriptStyle:string
 }

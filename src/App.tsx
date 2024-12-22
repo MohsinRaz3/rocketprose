@@ -5,6 +5,8 @@ import { Login } from './pages/Login';
 import { Signup } from './pages/SignUp';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Header } from './components/layout/Layout';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function App() {
@@ -14,6 +16,17 @@ function App() {
   };
   return(
     <Router>
+      <ToastContainer  
+      position="bottom-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={true}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="dark" />
     <Routes>
       {/* Define the layout route */}
       <Route path="/" element={<Header />}>
