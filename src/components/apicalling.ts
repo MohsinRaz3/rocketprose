@@ -1,39 +1,50 @@
-export async function submitAudioFileAndGetAudioTranscription(blob: Blob) {
-    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-    const filename = `audio_${timestamp}.wav`;
+import { WaveFile } from 'wavefile';
+import axios from 'axios';
 
-    // Create FormData and append audio file and transcriptStyle
+export async function submitAudioFileAndGetAudioTranscription(blob: File) {
+  const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+
+  try {
+    //@ts-ignore
+    const audioContext = new (window.AudioContext || window.webkitAudioContext )();
+    const arrayBuffer = await blob.arrayBuffer();
+    const decodedAudio = await audioContext.decodeAudioData(arrayBuffer);
+
+    const pcmData = decodedAudio.getChannelData(0); // Mono channel
+    const int16Array = new Int16Array(pcmData.length);
+    for (let i = 0; i < pcmData.length; i++) {
+      int16Array[i] = pcmData[i] * 0x7FFF;
+    }
+
+    const wav = new WaveFile();
+    //@ts-ignore
+    wav.fromScratch(1, decodedAudio.sampleRate, 16, int16Array);
+    const wavBuffer = wav.toBuffer();
+
+    const wavFile = new File([wavBuffer], `${timestamp}.wav`, { type: 'audio/wav' });
+
+    const downloadUrl = URL.createObjectURL(wavFile); 
+    const downloadLink = document.createElement('a'); 
+    downloadLink.href = downloadUrl;
+    downloadLink.download = `${timestamp}.wav`; 
+    downloadLink.click(); 
+
+    setTimeout(() => URL.revokeObjectURL(downloadUrl), 5000);
+
     const formData = new FormData();
-    formData.append('file', blob, filename);
-    // formData.append('transcriptStyle', transcriptStyle); 
+    formData.append('file', wavFile);
 
     const url = "https://salad-api-v2-zrui.onrender.com/rocketprose_transcribe";
+    const response = await axios.post(url, formData);
 
-    try {
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-            },
-            body: formData,
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-
-            console.log("error occured while submitAudioFileAndGetAudioTranscription ",response)
-            return "Error"        
-        }
-
-        const responseData = await response.json();
-        console.log("final response", responseData);
-        return responseData;
-
-    } catch (error) {
-        console.error('Error submitting audio files:', error);
-    }
+    console.log("Response Data:", response.data);
+    return response.data;
+  } catch (error) {
+    //@ts-ignore
+    console.error("Error:", error.message);
+    return "Error";
+  }
 }
-
 
 export async function GenerateProse(AudioTranscription: {transcript:string},transcriptionStyle: string |undefined) {
 
