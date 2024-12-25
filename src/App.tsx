@@ -28,8 +28,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Header />}>
             <Route index element={<LandingPage />} />
-            <Route path="signup" element={<Signup />} />
-            <Route path="signin" element={<Login />} />
+            <Route path="signup" element={<Signup/>} />
+            <Route path="signin" element={<Login/>} />
             <Route
               path="transcription"
               element={
