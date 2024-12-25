@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Outlet } from "react-router-dom";
 
@@ -20,14 +19,16 @@ export function Header() {
       RocketProse
     </span>
   </div>
+
+
   <button
         onClick={()=>navigate("/signin")} 
         className="bg-[#5B9BB2] text-sm text-white px-4 py-2 rounded-xl font-semibold
-           hover:bg-[#337B97] transition-all transform hover:scale-105
-           shadow-lg"
->
+           hover:bg-[#337B97] transition-all transform hover:scale-105 shadow-lg">
   SignIn
 </button>
+
+
 </div>
 </header>
       <Outlet /> 
