@@ -3,34 +3,18 @@ import { Input } from '../components/Input';
 import { Button } from '../components/Button';
 import { LogIn, Loader } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { supabaseClient } from '../config/supabase-client';
-import { Session } from '@supabase/supabase-js';
+import { useAuth } from '../hooks/Auth';
+import { toast } from 'react-toastify';
 
 export default function Login() {
-  const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const navigate = useNavigate();
+  const { session } = useAuth()
 
-  useEffect(() => {
-    // Get current session
-    supabaseClient.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-    });
-
-    // Listen for auth state changes
-    const { data: authListener } = supabaseClient.auth.onAuthStateChange(
-      (_event, session) => {
-        setSession(session);
-      }
-    );
-
-    return () => {
-      authListener.subscription.unsubscribe();
-    };
-  }, []);
 
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -44,6 +28,8 @@ export default function Login() {
       navigate('/');
     } catch (err) {
       console.error('Login failed:', err);
+      toast.error("Email/Passwords do not match!");
+
     } finally {
       setEmail('');
       setPassword('');
@@ -51,14 +37,6 @@ export default function Login() {
     }
   };
 
-  const handleLogout = async () => {
-    try {
-      const { error } = await supabaseClient.auth.signOut();
-      if (error) throw error;
-    } catch (err) {
-      console.error('Logout failed:', err);
-    }
-  };
 
   if (loading) return <Loader />;
 
@@ -107,12 +85,22 @@ export default function Login() {
         </>
       ) : (
         <>
-        <div className="min-h-screen bg-[#0A0A0A] flex flex-col items-center justify-center px-4">
-          <p className='text-[#5B9BB2]'>Welcome back, {session.user.email}</p>
-          <Button className="text-[#5B9BB2] hover:underline" onClick={handleLogout}>Logout</Button>
+          <div className="min-h-screen bg-[#0A0A0A] flex flex-col items-center justify-center px-4 gap-3">
+            <p className='text-[#5B9BB2]'>Welcome back, {session.user.email} </p>
+            <Button className="text-[#5B9BB2] hover:underline" onClick={handleLogout}>Logout</Button>
           </div>
         </>
       )}
     </div>
   );
 }
+
+
+export const handleLogout = async () => {
+  try {
+    const { error } = await supabaseClient.auth.signOut();
+    if (error) throw error;
+  } catch (err) {
+    console.error('Logout failed:', err);
+  }
+};
