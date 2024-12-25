@@ -23,7 +23,7 @@ export function Header() {
               RocketProse
             </span>
           </div>
-          {session && session.user && session.user.email ? <div className='flex items-center gap-3'><p className='text-[#5B9BB2] text-md'>{session.user.email} </p> <Button className="bg-[#5B9BB2] text-sm text-white px-4 py-2 rounded-xl font-semibold
+          {session && session.user && session.user.email ? <div className='flex items-center gap-3'><p className='text-[#5B9BB2] text-md hidden md:block'>{session.user.email} </p> <Button className="bg-[#5B9BB2] text-sm text-white px-4 py-2 rounded-xl font-semibold
            hover:bg-[#337B97] transition-all transform hover:scale-105 shadow-lg" onClick={handleLogout}>Logout</Button></div> : <button
             onClick={() => navigate("/signin")}
             className="bg-[#5B9BB2] text-sm text-white px-4 py-2 rounded-xl font-semibold
