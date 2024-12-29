@@ -17,7 +17,6 @@ export function FileUpload() {
     }
 
     // Handle valid files here
-    console.log('Valid files:', validFiles);
   };
 
   return (
@@ -40,9 +39,9 @@ export function FileUpload() {
           />
         </label>
       </p>
-      <p className="text-xs text-gray-500 mt-1">
+      {/* <p className="text-xs text-gray-500 mt-1">
         Supports MP3, WAV, M4A (max 500MB)
-      </p>
+      </p> */}
     </div>
   );
 }

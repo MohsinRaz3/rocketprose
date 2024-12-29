@@ -1,6 +1,7 @@
 
 import { Copy } from 'lucide-react';
 import { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 
 export function TranscriptionPreview({prose}:{prose:string}) {
   const [copySuccess, setCopySuccess] = useState("");
@@ -21,7 +22,7 @@ export function TranscriptionPreview({prose}:{prose:string}) {
   return (
     <div className={`bg-white/10 backdrop-blur rounded-lg shadow-md p-3 md:p-6 border border-white/20 `}>
       <h2 className="text-xl font-semibold text-white mb-4">Content Generated</h2>
-      <div className="border-2  border-gray-400 rounded-lg p-12 text-center transition-colors relative"
+      <div className="border-2  border-gray-400 rounded-lg p-3 pt-6 md:p-12 text-center transition-colors relative"
       >
               <Copy onClick={() => copyToClipboard(prose)} color='#fff' size={24} className=' size-4 md:size-6 absolute top-0 right-0 m-4 cursor-pointer hover:opacity-60'/>
               {copySuccess && (
@@ -29,8 +30,8 @@ export function TranscriptionPreview({prose}:{prose:string}) {
                     {copySuccess}
                   </span>
                 )}
-        <p className="mt-2 text-sm md:text-lg text-gray-300">
-          {prose}
+        <p className="mt-2 text-start text-sm md:text-lg text-gray-300">
+        <ReactMarkdown>{prose}</ReactMarkdown>
         </p>
         <p className="text-xs text-gray-500 mt-1">
         </p>

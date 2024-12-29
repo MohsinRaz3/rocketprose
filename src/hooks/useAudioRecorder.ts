@@ -1,23 +1,30 @@
 import { useState, useRef, useCallback } from "react";
 import RecordRTC from "recordrtc";
-import { GenerateProse, submitAudioFileAndGetAudioTranscription } from "../components/apicalling";
+import {  submitAudioFileAndGetAudioTranscription } from "../components/apicalling";
 import { AudioState } from "../types";
 
 
 export function useAudioRecorder(transcriptStyle: string) {
-  const [audioState, setAudioState] = useState<AudioState>({
+  const inititalAudioState: AudioState = {
     isRecording: false,
     isPaused: false,
     duration: 0,
     audioUrl: null,
+    initialUserTranscription: "",
+    userInputText: "",
     prose: "",
     isError: "",
     isLoading: false,
     transcriptStyle: transcriptStyle || "You are a skilled transcriptionist...",
-  });
+  }
+  const [audioState, setAudioState] = useState<AudioState>(inititalAudioState);
 
   const recorderRef = useRef<RecordRTC | null>(null);
   const timerRef = useRef<number | null>(null);
+ // Function to reset the audio state to its default values
+ const resetAudioState = useCallback(() => {
+  setAudioState(inititalAudioState);
+}, [inititalAudioState]);
 
   const startRecording = useCallback(async () => {
     try {
@@ -62,13 +69,12 @@ export function useAudioRecorder(transcriptStyle: string) {
           setAudioState((prev) => ({ ...prev, isLoading: true }));
 
           try {
-            const audioTranscription = await submitAudioFileAndGetAudioTranscription(audioFile);
-            const proseRes = await GenerateProse(audioTranscription, transcriptStyle);
+            const audioTranscription = await submitAudioFileAndGetAudioTranscription(audioFile,"recorded");
 
-            if (audioTranscription !== "Error" && proseRes !== "Error") {
+            if (audioTranscription !== "Error") {
               setAudioState((prev) => ({
                 ...prev,
-                prose: proseRes,
+                initialUserTranscription: audioTranscription,
               }));
             } else {
               setAudioState((prev) => ({
@@ -137,5 +143,6 @@ export function useAudioRecorder(transcriptStyle: string) {
     stopRecording,
     pauseRecording,
     resumeRecording,
+    resetAudioState
   };
 }

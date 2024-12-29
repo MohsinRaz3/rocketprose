@@ -5,6 +5,8 @@ export interface AudioState {
   isPaused: boolean;
   duration: number;
   audioUrl: string | null;
+  initialUserTranscription:string;
+  userInputText:string;
   prose:string;
   isError : string
   isLoading : boolean
@@ -21,3 +23,4 @@ export interface TranscriptionOptions {
   style: TranscriptStyle;
   webhookUrl: string;
 }
+export type ActiveTab = "Record Audio" | "Text" | "Upload Audio" | "none";
