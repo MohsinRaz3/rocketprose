@@ -16,7 +16,7 @@ export function Hero() {
           RocketProse
         </h1>
         <p className="text-xl text-[#5B9BB2] mb-12 max-w-2xl mx-auto leading-relaxed">
-          Professional audio transcription powered by AI. Record or upload audio and get
+          Professional audio transcription powered by AI. Record or upload audio & get
           accurate transcriptions in your preferred style.
         </p>
       </div>
